@@ -1,8 +1,5 @@
 package com.si2001.rentalcarspringboot.DTO;
 
-import com.si2001.rentalcarspringboot.model.Car;
-import com.si2001.rentalcarspringboot.model.User;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -12,16 +9,16 @@ public class ReservationDTO {
     private LocalDate startDate;
     private LocalDate endDate;
     private String status;
-    private User user;
-    private Car car;
+    private UserDTO userDTO;
+    private CarDTO carDTO;
 
-    public ReservationDTO(int id, LocalDate startDate, LocalDate endDate, String status, User user, Car car) {
+    public ReservationDTO(int id, LocalDate startDate, LocalDate endDate, String status, UserDTO userDTO, CarDTO carDTO) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
-        this.user = user;
-        this.car = car;
+        this.userDTO = userDTO;
+        this.carDTO = carDTO;
     }
 
     public int getId() {
@@ -32,20 +29,20 @@ public class ReservationDTO {
         this.id = id;
     }
 
-    public Car getCar() {
-        return car;
+    public CarDTO getCarDTO() {
+        return carDTO;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCarDTO(CarDTO carDTO) {
+        this.carDTO = carDTO;
     }
 
-    public User getUser() {
-        return user;
+    public UserDTO getUserDTO() {
+        return userDTO;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserDTO(UserDTO userDTO) {
+        this.userDTO = userDTO;
     }
 
     public String getStatus() {
@@ -76,12 +73,12 @@ public class ReservationDTO {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         ReservationDTO that = (ReservationDTO) o;
-        return id == that.id && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(status, that.status) && Objects.equals(user, that.user) && Objects.equals(car, that.car);
+        return id == that.id && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(status, that.status) && Objects.equals(userDTO, that.userDTO) && Objects.equals(carDTO, that.carDTO);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, startDate, endDate, status, user, car);
+        return Objects.hash(id, startDate, endDate, status, userDTO, carDTO);
     }
 
     @Override
@@ -91,8 +88,8 @@ public class ReservationDTO {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", status='" + status + '\'' +
-                ", user=" + user +
-                ", car=" + car +
+                ", userDTO=" + userDTO +
+                ", carDTO=" + carDTO +
                 '}';
     }
 }

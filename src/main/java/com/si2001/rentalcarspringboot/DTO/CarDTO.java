@@ -27,7 +27,7 @@ public class CarDTO {
         this.id = id;
     }
 
-    public boolean isAvailability() {
+    public boolean getAvailability() {
         return availability;
     }
 

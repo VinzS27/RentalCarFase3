@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface ReservationService {
     List<ReservationDTO> getAllReservations();
-    ReservationDTO getReservationById(int id);
+    List<ReservationDTO> getAllReservationById(int id);
+    ReservationDTO createReservation(ReservationDTO reservationDTO);
+    ReservationDTO updateReservation(ReservationDTO reservationDTO, int id);
+    void deleteReservation(int id);
 }

@@ -10,4 +10,10 @@ public interface UserService {
     UserDTO getUserById(int id);
 
     UserDTO getUserByUsername(String username);
+
+    UserDTO createUser(UserDTO userDTO);
+
+    UserDTO updateUser(UserDTO userDTO, int id);
+
+    void deleteUser(int id);
 }

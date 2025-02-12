@@ -1,5 +1,7 @@
 package com.si2001.rentalcarspringboot.DTO;
 
+import com.si2001.rentalcarspringboot.model.UserProfile;
+
 import java.util.Objects;
 import java.util.Set;
 
@@ -8,14 +10,19 @@ public class UserDTO {
     private String username;
     private String password;
     private String email;
-    private Set<String> userProfiles;
+    private Set<UserProfile> userProfiles;
 
-    public UserDTO(int id, String username, String password, String email, Set<String> roles) {
+    public UserDTO(int id, String username, String password, String email, Set<UserProfile> userProfiles) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.userProfiles = roles;
+        this.userProfiles = userProfiles;
+    }
+
+    public UserDTO() {}
+
+    public UserDTO(int id, String username, String password, String email) {
     }
 
     public int getId() {
@@ -50,11 +57,11 @@ public class UserDTO {
         this.email = email;
     }
 
-    public Set<String> getUserProfiles() {
+    public Set<UserProfile> getUserProfiles() {
         return userProfiles;
     }
 
-    public void setUserProfiles(Set<String> userProfiles) {
+    public void setUserProfiles(Set<UserProfile> userProfiles) {
         this.userProfiles = userProfiles;
     }
 
@@ -62,12 +69,12 @@ public class UserDTO {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         UserDTO userDTO = (UserDTO) o;
-        return id == userDTO.id && Objects.equals(username, userDTO.username) && Objects.equals(password, userDTO.password) && Objects.equals(email, userDTO.email);
+        return id == userDTO.id && Objects.equals(username, userDTO.username) && Objects.equals(password, userDTO.password) && Objects.equals(email, userDTO.email) && Objects.equals(userProfiles, userDTO.userProfiles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, email);
+        return Objects.hash(id, username, password, email, userProfiles);
     }
 
     @Override
@@ -77,7 +84,7 @@ public class UserDTO {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", userProfiles=" + userProfiles +
                 '}';
     }
-
 }
