@@ -5,9 +5,6 @@ import java.util.List;
 import com.si2001.rentalcarspringboot.DTO.CarDTO;
 import com.si2001.rentalcarspringboot.DTO.ReservationDTO;
 import com.si2001.rentalcarspringboot.DTO.UserDTO;
-import com.si2001.rentalcarspringboot.repository.CarRepository;
-import com.si2001.rentalcarspringboot.repository.ReservationRepository;
-import com.si2001.rentalcarspringboot.repository.UserRepository;
 import com.si2001.rentalcarspringboot.service.CarService;
 import com.si2001.rentalcarspringboot.service.ReservationService;
 import com.si2001.rentalcarspringboot.service.UserService;
@@ -21,20 +18,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/")
 public class RentalCarController {
 
-    final CarRepository carRepository;
-    final ReservationRepository reservationRepository;
-    final UserRepository userRepository;
     private final UserService userService;
     private final CarService carService;
     private final ReservationService reservationService;
 
     @Autowired
-    public RentalCarController(CarRepository carRepository, ReservationRepository reservationRepository,
-                               UserRepository userRepository, UserService userService
-            , CarService carService, ReservationService reservationService) {
-        this.carRepository = carRepository;
-        this.reservationRepository = reservationRepository;
-        this.userRepository = userRepository;
+    public RentalCarController(UserService userService, CarService carService,
+                               ReservationService reservationService) {
         this.userService = userService;
         this.carService = carService;
         this.reservationService = reservationService;
@@ -65,17 +55,14 @@ public class RentalCarController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/admin/user/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable int id, @RequestBody UserDTO user) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.updateUser(user,id));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.updateUser(user, id));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/admin/user/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {
-        if (userRepository.existsById(id)) {
-            userService.deleteUser(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
     //---------------CAR----------------------
@@ -95,17 +82,14 @@ public class RentalCarController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/admin/car/{id}")
     public ResponseEntity<CarDTO> updateCar(@PathVariable int id, @RequestBody CarDTO car) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(carService.updateCar(car,id));
+        return ResponseEntity.status(HttpStatus.CREATED).body(carService.updateCar(car, id));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/admin/car/{id}")
     public ResponseEntity<Void> deleteCar(@PathVariable int id) {
-        if (carRepository.existsById(id)) {
-            carService.deleteCar(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        carService.deleteCar(id);
+        return ResponseEntity.noContent().build();
     }
 
     //------------RESERVATION-----------------
@@ -131,17 +115,15 @@ public class RentalCarController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/admin/reservation/{id}")
     public ResponseEntity<ReservationDTO> updateReservation(@PathVariable int id, @RequestBody ReservationDTO reservation) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.updateReservation(reservation,id));
+        return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.updateReservation(reservation, id));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/admin/reservation/{id}")
     public ResponseEntity<Void> deleteReservation(@PathVariable int id) {
-        if (reservationRepository.existsById(id)) {
-            reservationService.deleteReservation(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        reservationService.deleteReservation(id);
+        return ResponseEntity.noContent().build();
+
     }
 
 }

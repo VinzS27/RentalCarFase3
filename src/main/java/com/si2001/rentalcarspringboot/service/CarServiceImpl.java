@@ -40,14 +40,14 @@ public class CarServiceImpl implements CarService {
         Car updateCar = carRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Car not found"));
 
-       updateCar.setBrand(carDTO.getBrand());
-       updateCar.setModel(carDTO.getModel());
-       updateCar.setYear(carDTO.getYear());
-       updateCar.setAvailability(carDTO.getAvailability());
-       updateCar.setLicensePlate(carDTO.getLicensePlate());
-       
-       carRepository.save(updateCar);
-       return convertToDTO(updateCar);
+        updateCar.setBrand(carDTO.getBrand());
+        updateCar.setModel(carDTO.getModel());
+        updateCar.setYear(carDTO.getYear());
+        updateCar.setAvailability(carDTO.getAvailability());
+        updateCar.setLicensePlate(carDTO.getLicensePlate());
+
+        carRepository.save(updateCar);
+        return convertToDTO(updateCar);
     }
 
     public void deleteCar(int id) {
@@ -69,7 +69,7 @@ public class CarServiceImpl implements CarService {
     }
 
     private CarDTO convertToDTO(Car car) {
-        return new CarDTO(car.getId(),car.getModel(),car.getBrand(),
-                car.getYear(),car.getLicensePlate(),car.getAvailability());
+        return new CarDTO(car.getId(), car.getModel(), car.getBrand(),
+                car.getYear(), car.getLicensePlate(), car.getAvailability());
     }
 }

@@ -7,7 +7,6 @@ import com.si2001.rentalcarspringboot.DTO.UserProfileDTO;
 import com.si2001.rentalcarspringboot.model.Car;
 import com.si2001.rentalcarspringboot.model.Reservation;
 import com.si2001.rentalcarspringboot.model.User;
-import com.si2001.rentalcarspringboot.model.UserProfile;
 import com.si2001.rentalcarspringboot.repository.CarRepository;
 import com.si2001.rentalcarspringboot.repository.ReservationRepository;
 import com.si2001.rentalcarspringboot.repository.UserRepository;
@@ -100,11 +99,15 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     private ReservationDTO convertToDTO(Reservation reservation) {
-        UserDTO userDTO = new UserDTO(reservation.getUser().getId(),
-                reservation.getUser().getUsername(), reservation.getUser().getPassword(),
-                reservation.getUser().getEmail(),reservation.getUser().getUserProfiles().stream()
-                .map(profile -> new UserProfile(profile.getId(), profile.getType()))
-                .collect(Collectors.toSet()));
+        UserDTO userDTO = new UserDTO(
+                reservation.getUser().getId(),
+                reservation.getUser().getUsername(),
+                reservation.getUser().getPassword(),
+                reservation.getUser().getEmail(),
+                reservation.getUser().getUserProfiles().stream()
+                        .map(profile -> new UserProfileDTO(profile.getId(), profile.getType()))
+                        .collect(Collectors.toSet())
+        );
 
         CarDTO carDTO = new CarDTO(reservation.getCar().getId(),
                 reservation.getCar().getBrand(), reservation.getCar().getModel(),

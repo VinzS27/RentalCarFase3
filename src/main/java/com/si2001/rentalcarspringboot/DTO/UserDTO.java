@@ -1,7 +1,5 @@
 package com.si2001.rentalcarspringboot.DTO;
 
-import com.si2001.rentalcarspringboot.model.UserProfile;
-
 import java.util.Objects;
 import java.util.Set;
 
@@ -10,19 +8,14 @@ public class UserDTO {
     private String username;
     private String password;
     private String email;
-    private Set<UserProfile> userProfiles;
+    private Set<UserProfileDTO> userProfiles;
 
-    public UserDTO(int id, String username, String password, String email, Set<UserProfile> userProfiles) {
+    public UserDTO(int id, String username, String password, String email, Set<UserProfileDTO> userProfiles) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.userProfiles = userProfiles;
-    }
-
-    public UserDTO() {}
-
-    public UserDTO(int id, String username, String password, String email) {
     }
 
     public int getId() {
@@ -57,11 +50,11 @@ public class UserDTO {
         this.email = email;
     }
 
-    public Set<UserProfile> getUserProfiles() {
+    public Set<UserProfileDTO> getUserProfilesDTO() {
         return userProfiles;
     }
 
-    public void setUserProfiles(Set<UserProfile> userProfiles) {
+    public void setUserProfilesDTO(Set<UserProfileDTO> userProfiles) {
         this.userProfiles = userProfiles;
     }
 
