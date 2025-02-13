@@ -57,17 +57,7 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation updateReservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
-        updateReservation.setStartDate(reservationDTO.getStartDate());
-        updateReservation.setEndDate(reservationDTO.getEndDate());
-        updateReservation.setStatus(reservationDTO.getStatus());
-
-        User user = userRepository.findById(reservationDTO.getUserDTO().getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        updateReservation.setUser(user);
-
-        Car car = carRepository.findById(reservationDTO.getCarDTO().getId())
-                .orElseThrow(() -> new RuntimeException("Car not found"));
-        updateReservation.setCar(car);
+        setReservationData(reservationDTO, updateReservation);
 
         reservationRepository.save(updateReservation);
 
@@ -80,20 +70,24 @@ public class ReservationServiceImpl implements ReservationService {
         reservationRepository.delete(reservation);
     }
 
-    private Reservation dtoToReservation(ReservationDTO reservationDTO) {
-        Reservation reservation = new Reservation();
-        reservation.setId(reservationDTO.getId());
-        reservation.setStartDate(reservationDTO.getStartDate());
-        reservation.setEndDate(reservationDTO.getEndDate());
-        reservation.setStatus(reservationDTO.getStatus());
+    private void setReservationData(ReservationDTO reservationDTO, Reservation updateReservation) {
+        updateReservation.setStartDate(reservationDTO.getStartDate());
+        updateReservation.setEndDate(reservationDTO.getEndDate());
+        updateReservation.setStatus(reservationDTO.getStatus());
 
         User user = userRepository.findById(reservationDTO.getUserDTO().getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        reservation.setUser(user);
+        updateReservation.setUser(user);
 
         Car car = carRepository.findById(reservationDTO.getCarDTO().getId())
                 .orElseThrow(() -> new RuntimeException("Car not found"));
-        reservation.setCar(car);
+        updateReservation.setCar(car);
+    }
+
+    private Reservation dtoToReservation(ReservationDTO reservationDTO) {
+        Reservation reservation = new Reservation();
+        reservation.setId(reservationDTO.getId());
+        setReservationData(reservationDTO, reservation);
 
         return reservation;
     }

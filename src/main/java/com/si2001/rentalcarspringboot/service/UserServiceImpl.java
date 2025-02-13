@@ -54,6 +54,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
+        if (userRepository.existsByUsername(userDTO.getUsername())) {
+            throw new RuntimeException("Username already taken");
+        }
         User user = dtoToUser(userDTO);
         User savedUser = userRepository.save(user);
         return convertToDTO(savedUser);

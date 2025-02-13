@@ -33,7 +33,7 @@ public class WebSecurityConfig {
                     authorize.requestMatchers("/api/admin/**").hasRole("ADMIN");
                     authorize.requestMatchers("/api/customer/**").hasRole("CUSTOMER");
                     authorize.anyRequest().authenticated();
-                }).httpBasic(Customizer.withDefaults());
+                });
 
         http.exceptionHandling(exception -> exception
                 .authenticationEntryPoint(jwtAuthEntryPoint));

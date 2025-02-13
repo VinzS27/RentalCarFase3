@@ -3,9 +3,10 @@ package com.si2001.rentalcarspringboot.config;
 import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import java.security.Key;
 import java.util.Date;
 import io.jsonwebtoken.security.Keys;
+
+import javax.crypto.SecretKey;
 import java.util.Base64;
 
 @Component
@@ -22,30 +23,30 @@ public class JwtTokenProvider {
                 .subject(username)
                 .issuedAt(new Date())
                 .expiration(expireDate)
-                .signWith(SignatureAlgorithm.HS256, getSigningKey())
+                .signWith(getSigningKey())
                 .compact();
     }
 
-    private Key getSigningKey() {
+    private SecretKey getSigningKey() {
         byte[] keyBytes = Base64.getDecoder().decode(jwtSecret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String getUsername(String token) {
         return Jwts.parser()
-                .setSigningKey(getSigningKey())
+                .verifyWith(getSigningKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody()
+                .parseSignedClaims(token)
+                .getPayload()
                 .getSubject();
     }
 
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
-                    .setSigningKey(getSigningKey())
+                    .verifyWith(getSigningKey())
                     .build()
-                    .parseClaimsJws(token);
+                    .parseSignedClaims(token);
             return true;
         } catch (JwtException e) {
             e.printStackTrace();

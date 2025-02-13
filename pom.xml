@@ -31,12 +31,6 @@
     </properties>
     <dependencies>
 
-        <!--THYMELEAF-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-
         <!--SPRING BOOT-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
