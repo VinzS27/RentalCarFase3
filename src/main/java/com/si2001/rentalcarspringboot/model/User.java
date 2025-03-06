@@ -2,7 +2,6 @@ package com.si2001.rentalcarspringboot.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -38,20 +37,6 @@ public class User {
     private Set<UserProfile> userProfiles;
 
     public User() {}
-
-    public User(int id, String username, String password, String email, List<Reservation> reservation, Set<UserProfile> userProfiles) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.reservation = reservation;
-        this.userProfiles = userProfiles;
-    }
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 
     public int getId() {
         return id;

@@ -1,9 +1,6 @@
 package com.si2001.rentalcarspringboot.service;
 
 import com.si2001.rentalcarspringboot.DTO.CarDTO;
-import com.si2001.rentalcarspringboot.DTO.CarDTO;
-import com.si2001.rentalcarspringboot.model.Car;
-import com.si2001.rentalcarspringboot.model.Car;
 import com.si2001.rentalcarspringboot.model.Car;
 import com.si2001.rentalcarspringboot.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +21,20 @@ public class CarServiceImpl implements CarService {
 
     public List<CarDTO> getAllCars() {
         List<Car> cars = carRepository.findAll();
+
+        return cars.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public CarDTO getCarById(int id) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("car not found"));
+        return convertToDTO(car);
+    }
+
+    public List<CarDTO> getAllAvailableCars() {
+        List<Car> cars = carRepository.findAllByAvailabilityTrue();
 
         return cars.stream()
                 .map(this::convertToDTO)

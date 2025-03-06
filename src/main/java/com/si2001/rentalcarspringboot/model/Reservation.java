@@ -28,15 +28,6 @@ public class Reservation {
     @JoinColumn(name = "car_id")
     private Car car;
 
-    public Reservation(int id, LocalDate startDate, LocalDate endDate, String status, User user, Car car) {
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.status = status;
-        this.user = user;
-        this.car = car;
-    }
-
     public Reservation() {}
 
     public int getId() {

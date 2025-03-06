@@ -39,8 +39,14 @@ public class ReservationServiceImpl implements ReservationService {
                 .collect(Collectors.toList());
     }
 
-    public List<ReservationDTO> getAllReservationById(int id) {
-        List<Reservation> reservations = reservationRepository.findAllById(id);
+    public ReservationDTO getReservationById(int id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("reservation not found"));
+        return convertToDTO(reservation);
+    }
+
+    public List<ReservationDTO> getAllReservationsByUserId(int id) {
+        List<Reservation> reservations = reservationRepository.findByUserId(id);
 
         return reservations.stream()
                 .map(this::convertToDTO)
@@ -58,10 +64,34 @@ public class ReservationServiceImpl implements ReservationService {
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
         setReservationData(reservationDTO, updateReservation);
-
+        updateReservation.setStatus("in approvazione");
         reservationRepository.save(updateReservation);
 
         return convertToDTO(updateReservation);
+    }
+
+    public ReservationDTO approveReservation(int id) {
+        Reservation approveReservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+        approveReservation.setStatus("approvato");
+        reservationRepository.save(approveReservation);
+
+        changeCarStatus(approveReservation.getCar(), false);
+
+        return convertToDTO(approveReservation);
+    }
+
+    public ReservationDTO declineReservation(int id) {
+        Reservation declineReservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+        declineReservation.setStatus("non approvato");
+        reservationRepository.save(declineReservation);
+
+        changeCarStatus(declineReservation.getCar(), true);
+
+        return convertToDTO(declineReservation);
     }
 
     public void deleteReservation(int id) {
@@ -82,6 +112,11 @@ public class ReservationServiceImpl implements ReservationService {
         Car car = carRepository.findById(reservationDTO.getCarDTO().getId())
                 .orElseThrow(() -> new RuntimeException("Car not found"));
         updateReservation.setCar(car);
+    }
+
+    private void changeCarStatus(Car updateReservation, boolean availability) {
+        updateReservation.setAvailability(availability);
+        carRepository.save(updateReservation);
     }
 
     private Reservation dtoToReservation(ReservationDTO reservationDTO) {

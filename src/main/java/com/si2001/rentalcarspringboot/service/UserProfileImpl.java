@@ -1,7 +1,6 @@
 package com.si2001.rentalcarspringboot.service;
 
 import com.si2001.rentalcarspringboot.DTO.UserProfileDTO;
-import com.si2001.rentalcarspringboot.model.User;
 import com.si2001.rentalcarspringboot.model.UserProfile;
 import com.si2001.rentalcarspringboot.repository.UserProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class UserProfileImpl implements UserProfileService {
     }
 
     public UserProfileDTO getUserProfileByType(String type) {
-        UserProfile userProfile = (UserProfile) userProfileRepository.findByType(type)
+        UserProfile userProfile = userProfileRepository.findByType(type)
                 .orElseThrow(() -> new RuntimeException("UserProfile not found"));
 
         return convertToDTO(userProfile);

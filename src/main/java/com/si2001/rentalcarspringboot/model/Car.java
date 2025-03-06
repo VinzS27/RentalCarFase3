@@ -28,23 +28,6 @@ public class Car {
 
     public Car() {}
 
-    public Car(int id, String model, String brand, int year, String licensePlate, boolean availability) {
-        this.id = id;
-        this.model = model;
-        this.brand = brand;
-        this.year = year;
-        this.licensePlate = licensePlate;
-        this.availability = availability;
-    }
-
-    public Car(String model, String brand, int year, String licensePlate, boolean availability) {
-        this.model = model;
-        this.brand = brand;
-        this.year = year;
-        this.licensePlate = licensePlate;
-        this.availability = availability;
-    }
-
     public int getId() {
         return id;
     }

@@ -32,12 +32,13 @@ public class WebSecurityConfig {
                     authorize.requestMatchers("/api/auth/**").permitAll();
                     authorize.requestMatchers("/api/admin/**").hasRole("ADMIN");
                     authorize.requestMatchers("/api/customer/**").hasRole("CUSTOMER");
+                    authorize.requestMatchers("/api/any/**").hasAnyRole("CUSTOMER", "ADMIN");
                     authorize.anyRequest().authenticated();
                 });
 
         http.exceptionHandling(exception -> exception
                 .authenticationEntryPoint(jwtAuthEntryPoint));
-
+        http.cors(Customizer.withDefaults());
         http.addFilterBefore(jwtAuthTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
